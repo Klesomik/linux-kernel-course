@@ -4,26 +4,23 @@
 
 MODULE_LICENSE("GPL");
 
-#define SUCCESS 0
-#define DEVICE_NAME "eg_device"
-#define BUF_LEN 80
+//#define SUCCESS 0
+//#define DEVICE_NAME "eg_device"
+//#define BUF_LEN 80
 
 static int major_num = 0;
 static int device_open_count = 0;
 
-static char msg[BUF_LEN];
+//static char msg[BUF_LEN];
 static char *msg_ptr;
 
 static ssize_t device_read(struct file* flip, char* buffer, size_t len, loff_t* offset)
 {
 	int bytes_read = 0;
-	...
-	...
 	if (*msg_ptr == 0)
 	{
 		return 0;
 	}
-	...
 	while (len && *msg_ptr)
 	{
 		put_user(*(msg_ptr++), buffer++);
@@ -33,11 +30,13 @@ static ssize_t device_read(struct file* flip, char* buffer, size_t len, loff_t* 
 	return bytes_read;
 }
 
-static ssize_t device_write(struct file* flip, const char* buffer, size_t len, loff_t* offset)
+/*static ssize_t device_write(struct file* flip, const char* buffer, size_t len, loff_t* offset)
 {
-	printk(KERN_ALERT "Invalid attempt to write to eg_device.\n");
-	return -EINVAL;
-}
+	while (len)
+	{
+		get_user(byte, buf);
+	}
+}*/
 
 static int device_open(struct inode* inode, struct file* file)
 {
@@ -81,6 +80,8 @@ static int __init first_module_init(void)
 
 static void __exit first_module_exit(void)
 {
+	printk(KERN_INFO "eg_device: I have read some text |%s|", msg_ptr);
+
 	unregister_chrdev(major_num, "eg_device");
 }
 
