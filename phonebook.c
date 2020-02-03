@@ -32,7 +32,7 @@ static ssize_t device_read(struct file* flip, char* buffer, size_t len, loff_t* 
 
 static ssize_t device_write(struct file* flip, const char* buffer, size_t len, loff_t* offset)
 {
-    printk(KERN_INFO "phonebook: write not realized\n");
+        printk(KERN_INFO "phonebook: write not realized\n");
 }
 
 static int device_open(struct inode* inode, struct file* file)
@@ -43,6 +43,7 @@ static int device_open(struct inode* inode, struct file* file)
 	}
 	device_open_count++;
 	try_module_get(THIS_MODULE);
+        printk(KERN_INFO "phonebook: device was opened\n");
 	return 0;
 }
 
@@ -50,6 +51,7 @@ static int device_release(struct inode* inode, struct file* file)
 {
 	device_open_count--;
 	module_put(THIS_MODULE);
+        printk(KERN_INFO "phonebook: device was closed\n");
 	return 0;
 }
 
