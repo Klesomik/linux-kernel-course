@@ -51,7 +51,7 @@ static int dev_open(struct inode* inode, struct file* file)
 
     if (device_open_count)
     {
-        printk(KERN_INFO "phonebook: [dev_open]: could not open device\n");
+        printk(KERN_INFO "phonebook: [dev_open]: could not open another one device\n");
         return -EBUSY;
     }
 
@@ -78,10 +78,11 @@ static int dev_release(struct inode* inode, struct file* file)
 }
 
 struct file_operations fops = {
-        .read    = dev_read,
-        .write   = dev_write,
-        .open    = dev_open,
-        .release = dev_release
+    .owner   = THIS_MODULE,
+    .read    = dev_read,
+    .write   = dev_write,
+    .open    = dev_open,
+    .release = dev_release
 };
 
 static int __init dev_init(void)
