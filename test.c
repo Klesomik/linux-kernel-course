@@ -12,7 +12,6 @@ int main()
     {
         printf("[test]: Can not open /dev/phonebook\n");
     }
-
     else
     {
         printf("[test]: /dev/phonebook was opened\n");
