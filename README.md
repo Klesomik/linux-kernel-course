@@ -3,5 +3,5 @@
 ### Run
 
 ```bash
-make test
+> make test
 ```
