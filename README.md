@@ -1,7 +1,14 @@
-# Simple char device phonebook
+# Simple char device
+
+phonebook
 
 ### Run
 
 ```bash
-> make test
+> make
+> make load
+> make nod
+> # do some stuff
+> make unload
+> make clean
 ```
