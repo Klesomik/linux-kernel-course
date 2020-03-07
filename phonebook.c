@@ -109,6 +109,7 @@ static void __exit dev_exit(void)
     unregister_chrdev(dev_major, DEV_NAME);
 
     printk(KERN_INFO "phonebook: [dev_exit]: _finish\n");
+    printk(KERN_INFO "phonebook: ==========================================\n");
 }
 
 module_init(dev_init);
