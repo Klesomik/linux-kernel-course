@@ -17,17 +17,14 @@ int main()
         printf("[test]: /dev/phonebook was opened\n");
     }
 
-    /*
-    if (read(fd, buffer, size) < 0)
+    /*if (read(fd, buffer, size) < 0)
     {
         printf("[test]: Can not read from device\n");
-    }
+    }*/
 
-    if (write(fd, buffer, size) < 0)
-    {
-        printf("[test]: Can not write to device\n");
-    }
-    */
+    const char buf[] = "abacaba";
+
+    printf("[test]: wrote %d bytes\n", write(fd, buf, sizeof(buf)));
 
     close(fd);
 

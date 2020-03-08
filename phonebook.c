@@ -28,13 +28,28 @@ static ssize_t dev_read(struct file* flip, char* buffer, size_t len, loff_t* off
 
 static ssize_t dev_write(struct file* flip, const char* buffer, size_t len, loff_t* offset)
 {
+    char *tmp;
+    int uncopied;
+
     printk(KERN_INFO "phonebook: [dev_write]: _start\n");
 
-    printk(KERN_INFO "phonebook: [dev_write]: no realisation yet\n");
+    tmp = kmalloc(len, GFP_KERNEL);
+    if (!tmp)
+    {
+        return -ENOMEM;
+    }
+
+    uncopied = copy_from_user(tmp, buffer, len);
+    if (uncopied > 0)
+    {
+        kfree(tmp);
+
+        return -EFAULT;
+    }
 
     printk(KERN_INFO "phonebook: [dev_write]: _finish\n");
 
-    return 0; // bytes_write
+    return len;
 }
 
 static int dev_open(struct inode* inode, struct file* file)
@@ -76,7 +91,7 @@ static int dev_release(struct inode* inode, struct file* file)
     return 0;
 }
 
-struct file_operations fops = {
+static struct file_operations fops = {
     .owner   = THIS_MODULE,
     .read    = dev_read,
     .write   = dev_write,
